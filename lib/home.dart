@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:provider/provider.dart';
 
 import 'models/transaction.dart';
 import 'widgets/add_transaction.dart';
@@ -7,6 +9,7 @@ import 'widgets/transaction_list.dart';
 import 'widgets/transaction_list_tile.dart';
 import 'widgets/chart.dart';
 import 'app_theme.dart';
+import 'models/theme_manager.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key}) : super(key: key);
@@ -58,6 +61,38 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+
+  final String prefThemeIndexKey = 'themeIndex';
+
+  void setCurrentIndexTheme() async{
+    final prefs = await SharedPreferences.getInstance();
+    bool curMode = Provider.of<ThemeManager>(context, listen: false).isDarkMode;
+    prefs.setBool(prefThemeIndexKey, curMode);
+  }
+
+  void getCurrentIndexTheme() async{
+    final prefs = await SharedPreferences.getInstance();
+    if (prefs.containsKey(prefThemeIndexKey)){
+      final value = prefs.getBool(prefThemeIndexKey);
+      setState(() {
+        if(value != null){
+          Provider.of<ThemeManager>(context, listen: false).darkMode = value;
+        }
+      });
+    }
+  }
+
+  void _switchTheme(){
+    Provider.of<ThemeManager>(context, listen: false).switchMode();
+    setCurrentIndexTheme();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getCurrentIndexTheme();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -65,7 +100,7 @@ class _MyHomePageState extends State<MyHomePage> {
         title: const Text('Personal Expanses App'),
         actions: [
           IconButton(
-            onPressed: () => currentAppTheme.switchMode(),
+            onPressed: _switchTheme,
             icon: const Icon(Icons.app_settings_alt_outlined),
           ),
         ],

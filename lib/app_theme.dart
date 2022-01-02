@@ -1,17 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
-AppTheme currentAppTheme = AppTheme();
-
-class AppTheme extends ChangeNotifier {
-  static bool isDark = false;
-
-  ThemeMode get currentThemeMode => isDark ? ThemeMode.dark : ThemeMode.light;
-
-  void switchMode() {
-    isDark = !isDark;
-    notifyListeners();
-  }
+class AppTheme {
 
   static ThemeData light() {
     return ThemeData(
@@ -47,7 +36,6 @@ class AppTheme extends ChangeNotifier {
   static ThemeData dark() {
     return ThemeData(
       brightness: Brightness.dark,
-      primaryColor: const Color.fromRGBO(76, 175, 80, 100),
       primarySwatch: Colors.green,
       appBarTheme: const AppBarTheme(
         foregroundColor: Colors.white,
@@ -76,4 +64,5 @@ class AppTheme extends ChangeNotifier {
       ),
     );
   }
+
 }
