@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import './database/sqflite/sqlite_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:provider/provider.dart';
 
@@ -8,7 +9,6 @@ import 'widgets/no_transaction.dart';
 import 'widgets/transaction_list.dart';
 import 'widgets/transaction_list_tile.dart';
 import 'widgets/chart.dart';
-import 'app_theme.dart';
 import 'models/theme_manager.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -21,16 +21,16 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   final List<Transaction> _userTransactions = [];
 
-  void _addNewTransaction(String t, double m, DateTime date) {
-    final newTrans = Transaction(
-      id: DateTime.now().toString(),
+  Future _addNewTransaction(String t, double m, DateTime date) async {
+    final newT = Transaction(
+      id: int.parse(DateTime.now().toString().split(':')[2].split('.')[1]),
       title: t,
       amount: m,
       date: date,
     );
 
     setState(() {
-      _userTransactions.add(newTrans);
+      _userTransactions.add(newT);
     });
   }
 
@@ -57,32 +57,35 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _deleteTransaction(int index) {
     setState(() {
-      _userTransactions.removeAt(index);
+      var transaction = _userTransactions.removeAt(index);
     });
   }
 
-
   final String prefThemeIndexKey = 'themeIndex';
 
-  void setCurrentIndexTheme() async{
+  void setCurrentIndexTheme() async {
     final prefs = await SharedPreferences.getInstance();
-    bool curMode = Provider.of<ThemeManager>(context, listen: false).isDarkMode;
+    bool curMode = Provider
+        .of<ThemeManager>(context, listen: false)
+        .isDarkMode;
     prefs.setBool(prefThemeIndexKey, curMode);
   }
 
-  void getCurrentIndexTheme() async{
+  void getCurrentIndexTheme() async {
     final prefs = await SharedPreferences.getInstance();
-    if (prefs.containsKey(prefThemeIndexKey)){
+    if (prefs.containsKey(prefThemeIndexKey)) {
       final value = prefs.getBool(prefThemeIndexKey);
       setState(() {
-        if(value != null){
-          Provider.of<ThemeManager>(context, listen: false).darkMode = value;
+        if (value != null) {
+          Provider
+              .of<ThemeManager>(context, listen: false)
+              .darkMode = value;
         }
       });
     }
   }
 
-  void _switchTheme(){
+  void _switchTheme() {
     Provider.of<ThemeManager>(context, listen: false).switchMode();
     setCurrentIndexTheme();
   }

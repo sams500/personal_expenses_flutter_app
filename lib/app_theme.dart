@@ -36,6 +36,7 @@ class AppTheme {
   static ThemeData dark() {
     return ThemeData(
       brightness: Brightness.dark,
+      primaryColor: Colors.green,
       primarySwatch: Colors.green,
       appBarTheme: const AppBarTheme(
         foregroundColor: Colors.white,

@@ -11,7 +11,7 @@ class AddTransaction extends StatefulWidget {
 }
 
 class _AddTransactionState extends State<AddTransaction> {
-  final titleController = TextEditingController();
+  final titleController = TextEditingController( );
   final amountController = TextEditingController();
   DateTime? _selectedDate;
 

@@ -7,6 +7,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:personal_expenses_app/database/sqflite/sqlite_repository.dart';
 
 import 'package:personal_expenses_app/main.dart';
 
