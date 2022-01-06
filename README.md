@@ -1,9 +1,9 @@
 # personal_expenses_app
 
-A new Flutter project.
+A small flutter application designed for learning purposes. 
+It demonstrates how to develop an interactive mobile application using flutter with theming and moor database capabilities.
 
 ## Getting Started
-
 This project is a starting point for a Flutter application.
 
 A few resources to get you started if this is your first Flutter project:
@@ -14,3 +14,7 @@ A few resources to get you started if this is your first Flutter project:
 For help getting started with Flutter, view our
 [online documentation](https://flutter.dev/docs), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
+
+## App Interfaces
+#### When there is no transaction
+[dark](./screenshots/no_transaction_dark.png)  [light](./screenshots/no_transaction_light.png)
