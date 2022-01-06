@@ -18,7 +18,7 @@ samples, guidance on mobile development, and a full API reference.
 
 ## App ScreenShots
 ### When there is no transaction
-<img src="./screenshots/no_transaction_dark.png" width="400" height="700">
+<img src="./screenshots/no_transaction_dark.png" width="300" height="700">
 # Done
 ![dark](./screenshots/no_transaction_dark.png)   ![light](./screenshots/no_transaction_light.png)
 
