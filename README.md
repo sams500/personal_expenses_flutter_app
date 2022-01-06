@@ -18,13 +18,14 @@ samples, guidance on mobile development, and a full API reference.
 
 ## App ScreenShots
 ### When there is no transaction
-<img src="./screenshots/no_transaction_dark.png" width="300" height="550">
-# Done
-![dark](./screenshots/no_transaction_dark.png)   ![light](./screenshots/no_transaction_light.png)
+<img src="./screenshots/no_transaction_dark.png" width="300" height="550">  <img src="./screenshots/no_transaction_light.png" width="300" height="550">
+
 
 ### Adding a transaction 
-![add transaction](./screenshots/add_transaction.png)    ![choose date](./screenshots/add_date.png)
+<img src="./screenshots/add_transaction.png" width="300" height="550">  <img src="./screenshots/add_date.png" width="300" height="550">
 
-### the main screen with some transactions 
-![main dark](./screenshots/main_dark.png)    ![main light](./screenshots/main_light.png)
+
+### the main screen with some transactions
+<img src="./screenshots/main_dark.png" width="300" height="550">  <img src="./screenshots/main_light.png" width="300" height="550">
+
 
