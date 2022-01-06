@@ -1,6 +1,7 @@
 # personal_expenses_app
 
-A small flutter application designed for learning purposes. It demonstrates how to develop an interactive mobile application using flutter with theming and moor database capabilities.
+A small flutter application designed for learning purposes. 
+It demonstrates how to develop an interactive mobile application using flutter with theming and moor database capabilities.
 
 ## Getting Started
 
