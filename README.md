@@ -18,7 +18,7 @@ samples, guidance on mobile development, and a full API reference.
 
 ## App ScreenShots
 #### When there is no transaction
-![dark](./screenshots/no_transaction_dark.png){:height="500px" width="100px"}   ![light](./screenshots/no_transaction_light.png)
+![dark](./screenshots/no_transaction_dark.png&s=200)   ![light](./screenshots/no_transaction_light.png)
 
 #### Adding a transaction 
 ![add transaction](./screenshots/add_transaction.png)    ![choose date](./screenshots/add_date.png)
