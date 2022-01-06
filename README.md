@@ -1,6 +1,6 @@
 # personal_expenses_app
 
-A new Flutter project.
+A small flutter application designed for learning purposes. It demonstrates how to develop an interactive mobile application using flutter with theming and moor database capabilities.
 
 ## Getting Started
 
