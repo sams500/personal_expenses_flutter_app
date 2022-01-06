@@ -17,11 +17,14 @@ For help getting started with Flutter, view our
 samples, guidance on mobile development, and a full API reference.
 
 ## App ScreenShots
-#### When there is no transaction
-![dark](./screenshots/no_transaction_dark.png?s=50)   ![light](./screenshots/no_transaction_light.png)
+### When there is no transaction
+<img src="./screenshots/no_transaction_dark.png" width="150" height="280">
+# Done
+![dark](./screenshots/no_transaction_dark.png)   ![light](./screenshots/no_transaction_light.png)
 
-#### Adding a transaction 
+### Adding a transaction 
 ![add transaction](./screenshots/add_transaction.png)    ![choose date](./screenshots/add_date.png)
 
-#### the main screen with some transactions 
+### the main screen with some transactions 
 ![main dark](./screenshots/main_dark.png)    ![main light](./screenshots/main_light.png)
+
