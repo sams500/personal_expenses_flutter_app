@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import '../models/transaction.dart';
+import '../database/sqflite/transaction.dart';
 
 class TransactionListTile extends StatelessWidget {
   final List<Transaction> transactions;

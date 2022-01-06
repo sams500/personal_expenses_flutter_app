@@ -1,7 +1,7 @@
 import 'dart:async';
 // 1
 import 'database_helper.dart';
-import '../../models/transaction.dart';
+import 'transaction.dart';
 
 class SqliteRepository {
   // 3

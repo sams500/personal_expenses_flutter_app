@@ -7,20 +7,21 @@ part of 'moor_db.dart';
 // **************************************************************************
 
 // ignore_for_file: unnecessary_brace_in_string_interps, unnecessary_this
-class Transaction extends DataClass implements Insertable<Transaction> {
+class MoorTransaction extends DataClass implements Insertable<MoorTransaction> {
   final int id;
   final String title;
   final double amount;
   final DateTime date;
-  Transaction(
+  MoorTransaction(
       {required this.id,
       required this.title,
       required this.amount,
       required this.date});
-  factory Transaction.fromData(Map<String, dynamic> data, GeneratedDatabase db,
+  factory MoorTransaction.fromData(
+      Map<String, dynamic> data, GeneratedDatabase db,
       {String? prefix}) {
     final effectivePrefix = prefix ?? '';
-    return Transaction(
+    return MoorTransaction(
       id: const IntType()
           .mapFromDatabaseResponse(data['${effectivePrefix}id'])!,
       title: const StringType()
@@ -41,8 +42,8 @@ class Transaction extends DataClass implements Insertable<Transaction> {
     return map;
   }
 
-  TransactionsCompanion toCompanion(bool nullToAbsent) {
-    return TransactionsCompanion(
+  MoorTransactionsCompanion toCompanion(bool nullToAbsent) {
+    return MoorTransactionsCompanion(
       id: Value(id),
       title: Value(title),
       amount: Value(amount),
@@ -50,10 +51,10 @@ class Transaction extends DataClass implements Insertable<Transaction> {
     );
   }
 
-  factory Transaction.fromJson(Map<String, dynamic> json,
+  factory MoorTransaction.fromJson(Map<String, dynamic> json,
       {ValueSerializer? serializer}) {
     serializer ??= moorRuntimeOptions.defaultSerializer;
-    return Transaction(
+    return MoorTransaction(
       id: serializer.fromJson<int>(json['id']),
       title: serializer.fromJson<String>(json['title']),
       amount: serializer.fromJson<double>(json['amount']),
@@ -71,9 +72,9 @@ class Transaction extends DataClass implements Insertable<Transaction> {
     };
   }
 
-  Transaction copyWith(
+  MoorTransaction copyWith(
           {int? id, String? title, double? amount, DateTime? date}) =>
-      Transaction(
+      MoorTransaction(
         id: id ?? this.id,
         title: title ?? this.title,
         amount: amount ?? this.amount,
@@ -81,7 +82,7 @@ class Transaction extends DataClass implements Insertable<Transaction> {
       );
   @override
   String toString() {
-    return (StringBuffer('Transaction(')
+    return (StringBuffer('MoorTransaction(')
           ..write('id: $id, ')
           ..write('title: $title, ')
           ..write('amount: $amount, ')
@@ -95,25 +96,25 @@ class Transaction extends DataClass implements Insertable<Transaction> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is Transaction &&
+      (other is MoorTransaction &&
           other.id == this.id &&
           other.title == this.title &&
           other.amount == this.amount &&
           other.date == this.date);
 }
 
-class TransactionsCompanion extends UpdateCompanion<Transaction> {
+class MoorTransactionsCompanion extends UpdateCompanion<MoorTransaction> {
   final Value<int> id;
   final Value<String> title;
   final Value<double> amount;
   final Value<DateTime> date;
-  const TransactionsCompanion({
+  const MoorTransactionsCompanion({
     this.id = const Value.absent(),
     this.title = const Value.absent(),
     this.amount = const Value.absent(),
     this.date = const Value.absent(),
   });
-  TransactionsCompanion.insert({
+  MoorTransactionsCompanion.insert({
     this.id = const Value.absent(),
     required String title,
     required double amount,
@@ -121,7 +122,7 @@ class TransactionsCompanion extends UpdateCompanion<Transaction> {
   })  : title = Value(title),
         amount = Value(amount),
         date = Value(date);
-  static Insertable<Transaction> custom({
+  static Insertable<MoorTransaction> custom({
     Expression<int>? id,
     Expression<String>? title,
     Expression<double>? amount,
@@ -135,12 +136,12 @@ class TransactionsCompanion extends UpdateCompanion<Transaction> {
     });
   }
 
-  TransactionsCompanion copyWith(
+  MoorTransactionsCompanion copyWith(
       {Value<int>? id,
       Value<String>? title,
       Value<double>? amount,
       Value<DateTime>? date}) {
-    return TransactionsCompanion(
+    return MoorTransactionsCompanion(
       id: id ?? this.id,
       title: title ?? this.title,
       amount: amount ?? this.amount,
@@ -168,7 +169,7 @@ class TransactionsCompanion extends UpdateCompanion<Transaction> {
 
   @override
   String toString() {
-    return (StringBuffer('TransactionsCompanion(')
+    return (StringBuffer('MoorTransactionsCompanion(')
           ..write('id: $id, ')
           ..write('title: $title, ')
           ..write('amount: $amount, ')
@@ -178,11 +179,11 @@ class TransactionsCompanion extends UpdateCompanion<Transaction> {
   }
 }
 
-class $TransactionsTable extends Transactions
-    with TableInfo<$TransactionsTable, Transaction> {
+class $MoorTransactionsTable extends MoorTransactions
+    with TableInfo<$MoorTransactionsTable, MoorTransaction> {
   final GeneratedDatabase _db;
   final String? _alias;
-  $TransactionsTable(this._db, [this._alias]);
+  $MoorTransactionsTable(this._db, [this._alias]);
   final VerificationMeta _idMeta = const VerificationMeta('id');
   late final GeneratedColumn<int?> id = GeneratedColumn<int?>(
       'id', aliasedName, false,
@@ -204,11 +205,11 @@ class $TransactionsTable extends Transactions
   @override
   List<GeneratedColumn> get $columns => [id, title, amount, date];
   @override
-  String get aliasedName => _alias ?? 'transactions';
+  String get aliasedName => _alias ?? 'moor_transactions';
   @override
-  String get actualTableName => 'transactions';
+  String get actualTableName => 'moor_transactions';
   @override
-  VerificationContext validateIntegrity(Insertable<Transaction> instance,
+  VerificationContext validateIntegrity(Insertable<MoorTransaction> instance,
       {bool isInserting = false}) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
@@ -239,23 +240,35 @@ class $TransactionsTable extends Transactions
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  Transaction map(Map<String, dynamic> data, {String? tablePrefix}) {
-    return Transaction.fromData(data, _db,
+  MoorTransaction map(Map<String, dynamic> data, {String? tablePrefix}) {
+    return MoorTransaction.fromData(data, _db,
         prefix: tablePrefix != null ? '$tablePrefix.' : null);
   }
 
   @override
-  $TransactionsTable createAlias(String alias) {
-    return $TransactionsTable(_db, alias);
+  $MoorTransactionsTable createAlias(String alias) {
+    return $MoorTransactionsTable(_db, alias);
   }
 }
 
 abstract class _$TransactionDatabase extends GeneratedDatabase {
   _$TransactionDatabase(QueryExecutor e)
       : super(SqlTypeSystem.defaultInstance, e);
-  late final $TransactionsTable transactions = $TransactionsTable(this);
+  late final $MoorTransactionsTable moorTransactions =
+      $MoorTransactionsTable(this);
+  late final TransactionDao transactionDao =
+      TransactionDao(this as TransactionDatabase);
   @override
   Iterable<TableInfo> get allTables => allSchemaEntities.whereType<TableInfo>();
   @override
-  List<DatabaseSchemaEntity> get allSchemaEntities => [transactions];
+  List<DatabaseSchemaEntity> get allSchemaEntities => [moorTransactions];
+}
+
+// **************************************************************************
+// DaoGenerator
+// **************************************************************************
+
+mixin _$TransactionDaoMixin on DatabaseAccessor<TransactionDatabase> {
+  $MoorTransactionsTable get moorTransactions =>
+      attachedDatabase.moorTransactions;
 }

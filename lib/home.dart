@@ -1,15 +1,18 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
-import './database/sqflite/sqlite_repository.dart';
+import 'package:moor_flutter/moor_flutter.dart';
+import 'package:personal_expenses_app/database/moor/moor_db.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter/src/widgets/basic.dart' as W;
 
-import 'models/transaction.dart';
 import 'widgets/add_transaction.dart';
-import 'widgets/no_transaction.dart';
+
 import 'widgets/transaction_list.dart';
-import 'widgets/transaction_list_tile.dart';
 import 'widgets/chart.dart';
-import 'models/theme_manager.dart';
+import 'theme_manager.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key}) : super(key: key);
@@ -19,21 +22,39 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final List<Transaction> _userTransactions = [];
+  final String prefThemeIndexKey = 'themeIndex';
 
-  Future _addNewTransaction(String t, double m, DateTime date) async {
-    final newT = Transaction(
-      id: int.parse(DateTime.now().toString().split(':')[2].split('.')[1]),
-      title: t,
-      amount: m,
-      date: date,
-    );
-
-    setState(() {
-      _userTransactions.add(newT);
-    });
+  @override
+  void initState() {
+    super.initState();
+    getCurrentIndexTheme();
+  }
+  
+  
+  void _switchTheme() {
+    Provider.of<ThemeManager>(context, listen: false).switchMode();
+    setCurrentIndexTheme();
+  }
+  
+  void setCurrentIndexTheme() async {
+    final prefs = await SharedPreferences.getInstance();
+    bool curMode = Provider.of<ThemeManager>(context, listen: false).isDarkMode;
+    prefs.setBool(prefThemeIndexKey, curMode);
   }
 
+  void getCurrentIndexTheme() async {
+    final prefs = await SharedPreferences.getInstance();
+    if (prefs.containsKey(prefThemeIndexKey)) {
+      final value = prefs.getBool(prefThemeIndexKey);
+      setState(() {
+        if (value != null) {
+          Provider.of<ThemeManager>(context, listen: false).darkMode = value;
+        }
+      });
+    }
+  }
+  
+  
   void _startAddNewTransaction(BuildContext ctxt) {
     showModalBottomSheet<void>(
       context: ctxt,
@@ -47,55 +68,20 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  List<Transaction> get _lastWeekTransactions {
-    return _userTransactions.where((element) {
-      return element.date.isAfter(
-        DateTime.now().subtract(const Duration(days: 7)),
-      );
-    }).toList();
+  Future _addNewTransaction(String t, double m, DateTime date) async {
+    final newT = MoorTransactionsCompanion(
+      title: Value(t),
+      amount: Value(m),
+      date: Value(date),
+    );
+    Provider.of<TransactionDao>(context, listen: false).insertTransaction(newT);
   }
 
-  void _deleteTransaction(int index) {
-    setState(() {
-      var transaction = _userTransactions.removeAt(index);
-    });
+  void _deleteTransaction(MoorTransaction transaction) {
+    Provider.of<TransactionDao>(context, listen: false)
+        .deleteTransaction(transaction);
   }
-
-  final String prefThemeIndexKey = 'themeIndex';
-
-  void setCurrentIndexTheme() async {
-    final prefs = await SharedPreferences.getInstance();
-    bool curMode = Provider
-        .of<ThemeManager>(context, listen: false)
-        .isDarkMode;
-    prefs.setBool(prefThemeIndexKey, curMode);
-  }
-
-  void getCurrentIndexTheme() async {
-    final prefs = await SharedPreferences.getInstance();
-    if (prefs.containsKey(prefThemeIndexKey)) {
-      final value = prefs.getBool(prefThemeIndexKey);
-      setState(() {
-        if (value != null) {
-          Provider
-              .of<ThemeManager>(context, listen: false)
-              .darkMode = value;
-        }
-      });
-    }
-  }
-
-  void _switchTheme() {
-    Provider.of<ThemeManager>(context, listen: false).switchMode();
-    setCurrentIndexTheme();
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    getCurrentIndexTheme();
-  }
-
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -108,13 +94,11 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ],
       ),
-      body: Column(
+      body: W.Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          ChartWidget(_lastWeekTransactions),
-          _userTransactions.isEmpty
-              ? const NoTransaction()
-              : TransactionList(_userTransactions, _deleteTransaction),
+          const ChartWidget(),
+          TransactionList(_deleteTransaction),
         ],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,

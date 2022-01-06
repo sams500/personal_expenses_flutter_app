@@ -7,6 +7,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:personal_expenses_app/database/moor/moor_db.dart';
 import 'package:personal_expenses_app/database/sqflite/sqlite_repository.dart';
 
 import 'package:personal_expenses_app/main.dart';
@@ -14,7 +15,8 @@ import 'package:personal_expenses_app/main.dart';
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+    TransactionDatabase db;
+    await tester.pumpWidget(MyApp(db: TransactionDatabase()));
 
     // Verify that our counter starts at 0.
     expect(find.text('0'), findsOneWidget);

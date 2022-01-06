@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import './database/sqflite/sqlite_repository.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import './database/moor/moor_db.dart';
 
 import 'app_theme.dart';
 import 'home.dart';
-import 'models/theme_manager.dart';
+import 'theme_manager.dart';
 
-void main() async {
-
-  runApp(const MyApp());
+void main() {
+  TransactionDatabase db = TransactionDatabase();
+  runApp(MyApp(db:db));
 }
 
 class MyApp extends StatefulWidget {
-
-  const MyApp({Key? key,}) : super(key: key);
+  TransactionDatabase db;
+  MyApp({
+    Key? key, required this.db
+  }) : super(key: key);
 
   @override
   State<MyApp> createState() => _MyAppState();
@@ -27,6 +27,9 @@ class _MyAppState extends State<MyApp> {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => ThemeManager()),
+        Provider<TransactionDao>(
+            create: (context) => TransactionDao(widget.db),
+        )
       ],
       child: Consumer<ThemeManager>(
         builder: (context, themeManager, child) {

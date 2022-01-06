@@ -4,7 +4,7 @@ import 'package:sqflite/sqflite.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqlbrite/sqlbrite.dart';
 import 'package:synchronized/synchronized.dart';
-import '../../models/transaction.dart' as myTransaction;
+import 'transaction.dart' as myTransaction;
 
 class DatabaseHelper {
   static const _databaseName = 'Transaction.db';

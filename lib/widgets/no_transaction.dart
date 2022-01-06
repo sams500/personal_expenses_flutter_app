@@ -23,6 +23,7 @@ class NoTransaction extends StatelessWidget {
           child: Image.asset(
             'assets/images/no_transaction.png',
             fit: BoxFit.fill,
+            color: Theme.of(context).primaryColor,
           ),
         ),
       ],
